@@ -1,0 +1,13 @@
+<div class="container w-50 p-2">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link" [class]="{'active': prod_nota}" id="nav-produtos-tab" data-bs-toggle="tab" type="button" role="tab" (click)="ChangeTab()">Produtos</button>
+      <button class="nav-link" [class]="{'active': !prod_nota}" id="nav-notas-tab" data-bs-toggle="tab" type="button" role="tab" (click)="ChangeTab()">Notas</button>
+    </div>
+  </nav>
+  @if (prod_nota) {
+    <produtos></produtos>
+  } @else {
+    <notas></notas>
+  }
+</div>

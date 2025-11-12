@@ -1,0 +1,139 @@
+<div>
+    @if(okAdd.length > 0){
+    <div class="alert alert-success" role="alert">
+        {{okAdd}}
+    </div>
+    }
+    @if(errorAdd.length > 0){
+    <div class="alert alert-danger" role="alert">
+        {{errorAdd}}
+    </div>
+    }
+    @if(info.length > 0 && request){
+    <div class="alert alert-secondary" role="alert">
+        {{info}}
+    </div>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Saldo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of produtos; track $index) {
+            <tr>
+                <td>{{item.codigo}}</td>
+                <td>{{item.descricao}} </td>
+                <td>{{item.saldo}}</td>
+                <td class="text-center">
+                    <button class="btn btn-warning" (click)="SelectProduto(item)" data-bs-toggle="modal" data-bs-target="#modalProdutoAdd"><i class="bi bi-pencil-square"></i></button>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if(page.totalPages > 1){
+                <li class="page-item" [class]="{'disabled': page.currentPage == 1}" (click)="ChangePage(-2)">
+                    <a class="page-link" href="#">Anterior</a>
+                </li>
+                <li class="page-item" [class]="{'active': page.currentPage == 1}" (click)="ChangePage(-1)">
+                    <a class="page-link" href="#">
+                        @switch(page.currentPage){
+                        @case (1){
+                        1
+                        }
+                        @case (page.totalPages){
+                        {{page.currentPage - 2}}
+                        }
+                        @default{
+                        {{page.currentPage-1}}
+                        }
+                        }
+                    </a>
+                </li>
+                <li class="page-item" [class]="{'active': (page.currentPage > 1 && page.currentPage < page.totalPages)}"
+                    (click)="ChangePage(0)">
+                    <a class="page-link" href="#">
+                        @switch(page.currentPage){
+                        @case (1){
+                        2
+                        }
+                        @case (page.totalPages){
+                        {{page.currentPage - 1}}
+                        }
+                        @default{
+                        {{page.currentPage}}
+                        }
+                        }
+                    </a>
+                </li>
+                @if (page.totalPages >= 3){
+                <li class="page-item" [class]="{'active': page.currentPage == page.totalPages}" (click)="ChangePage(1)">
+                    <a class="page-link" href="#">
+                        @switch(page.currentPage){
+                        @case (1){
+                        3
+                        }
+                        @case (page.totalPages){
+                        {{page.currentPage}}
+                        }
+                        @default{
+                        {{page.currentPage+1}}
+                        }
+                        }
+                    </a>
+                </li>
+                }
+                <li class="page-item" [class]="{'disabled': page.currentPage == page.totalPages}"
+                    (click)="ChangePage(2)">
+                    <a class="page-link" href="#">Proximo</a>
+                </li>
+                }
+            </ul>
+        </nav>
+        <div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProdutoAdd" (click)="SelectProduto()">+
+                Adicionar</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalProdutoAdd" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{produtoData.novo ? 'Adicionar' : 'Modificar'}} Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="Codigo" class="d-flex">Código<div class="text-danger">*</div></label>
+                        <input type="text" id="Codigo" class="form-control" [ngClass]="{'border border-danger': validate.cod}" [value]="produtoData.codigo" placeholder="ABC1234"
+                            maxlength="10" (keydown)="ChangeProdutoCod($event)" [disabled]="!produtoData.novo" />
+                    </div>
+                    <div>
+                        <label for="Descricao" class="d-flex">Descrição<div class="text-danger">*</div></label>
+                        <input type="text" id="Descricao" class="form-control" [(ngModel)]="produtoData.descricao"
+                            placeholder="Objeto tipo A" maxlength="100" />
+                    </div>
+                    <div>
+                        <label>Saldo</label>
+                        <input type="number" class="form-control" [(ngModel)]="produtoData.saldo" placeholder="ABC1234" name="Saldo"
+                            step="1" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" (click)="AdicionarProduto()" data-bs-dismiss="modal">{{produtoData.novo ? 'Adicionar' : 'Salvar'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

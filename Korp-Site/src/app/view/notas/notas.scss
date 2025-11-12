@@ -1,0 +1,23 @@
+.dot {
+    width: .65rem;
+    height: .65rem;
+    background: rgb(1, 175, 1);
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 .2rem;
+}
+
+.dot.aberto {
+    background: rgb(1, 175, 1);
+    box-shadow:
+        0 0 6px rgba(1, 175, 1,.7),
+        0 0 16px rgba(1, 175, 1,.4); /* glow */
+}
+
+.dot.fechado {
+    background: rgb(255, 64, 64);
+    box-shadow:
+        0 0 6px rgba(255, 64, 64,.7),
+        0 0 16px rgba(255, 64, 64,.4); /* glow */
+}

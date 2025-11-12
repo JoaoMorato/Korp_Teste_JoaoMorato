@@ -1,0 +1,6 @@
+services:
+  produtoapi:
+    image: ${DOCKER_REGISTRY-}produtoapi
+    build:
+      context: ../..
+      dockerfile: API/KorpAPI/ProdutoAPI/Dockerfile
